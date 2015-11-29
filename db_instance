@@ -1,0 +1,18 @@
+db.message.insert({
+	"receiver" : "sen_zheng",
+	"sender" : "mengxiong",
+	"content" : "This is a message from mengxiong",
+	"messageDate" : ISODate("2015-11-20T00:00:00Z"),
+	"read" : false,
+	"new" : true
+})
+
+db.message.update(
+	{_id: ObjectId("564fd340de776ade1d2d5c74")},
+	{
+
+	   $currentDate: {
+         "messageDate" : true
+       }
+    }
+)

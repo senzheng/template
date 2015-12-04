@@ -16,3 +16,8 @@ db.message.update(
        }
     }
 )
+
+db.user.insert({
+	"username" : "sen_zheng",
+	"password" : "123456789"
+})

@@ -1,0 +1,28 @@
+<!doctype HTML>
+<html>
+  <head>
+  	<title>Tamplate 1</title>
+  	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="controller/signinCtrl.js"></script>
+  </head>
+  <body ng-app="signin">
+  	  <div class="container" ng-model="pnonvalid">
+          <div class="well" ng-controller="signinCtrl">
+           <form method="post" name="signin" action="/resgister" >
+          	<table class="table table-striped" ng-model="nonvalid">
+                <tr><td><lable>Username</label></td><td><input type="text" name="username" placeholder="Username" ng-model = "user.name" ng-blur="check(user.name)" required></td></tr>{{test}}
+                <tr><td><lable>Password</label></td><td><input type="password" name="password" placeholder="Password" ng-model = "user.password" ng-disabled="nonvalid" ng-blur="checkP(user.password)" required></td></tr>
+          	</table>
+          	<Button class="btn btn-primary" type="submit" ng-disabled="pnonvalid">Submit</Button>
+           </form>
+          </div>
+  	  </div> 
+  </body>
+</html>

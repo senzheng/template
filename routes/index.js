@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+
+//check the user dupulication
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index');
@@ -71,4 +74,37 @@ router.put('/marknew:receiver', function(req, res, next){
         });
     });
  });
+
+router.get('/check:username', function(req, res, next){
+    var db = req.db;
+    var collection = db.get('user');
+    collection.find({"username" : req.params.username},{},function(e,doc){
+        res.end(JSON.stringify(doc));
+   });
+});
+
+
+router.get('/signin', function(req, res, next){
+     res.render('signin');
+});
+/* put the new user's info into database*/
+router.post('/resgister',function(req, res, next){
+    var db = req.db;
+    var username = req.body.username;
+    var password = req.body.password;
+
+    var collection = db.get('user');
+
+    collection.insert({
+      "username" : username,
+      "password" : password
+    },function (err, doc){
+      if(err){
+        res.send("There was a problem to connect to the database! Please try later!");
+      }else{
+        res.redirect('tempOne');
+      }
+    });
+});
+
 module.exports = router;

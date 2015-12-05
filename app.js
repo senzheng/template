@@ -26,7 +26,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({resave: true, saveUninitialized: true, secret: 'WELOVECARROT', cookie: { maxAge: 60000 }}));
+app.use(session({resave: true, saveUninitialized: true, secret: 'WELOVECARROT', cookie: { maxAge: 600000 }}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next){

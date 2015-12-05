@@ -15,15 +15,15 @@ router.get('/index', function(req, res, next) {
 
 router.get('/tempOne', function(req, res, next){
   if(req.session.username){
-     res.render('tempOne');
+     res.render('tempOne', {"user" : req.session.username});
    }
    res.redirect('/');
 });
 
-router.get('/getMessage:receiver',function(req,res,next){
+router.get('/getMessage',function(req,res,next){
    var db = req.db;
     var collection = db.get('message');
-    collection.find({"receiver" : req.params.receiver},{},function(e,doc){
+    collection.find({"receiver" : req.session.username},{},function(e,doc){
         res.end(JSON.stringify(doc));
    });
 });
@@ -38,11 +38,9 @@ router.post('/sendMessage', function(req, res, next){
 	var collection = db.get('message');
     var d = new Date();
     var n = d.toISOString();
-
-
     var MessageDate = n;
 	collection.insert({
-	    "sender" : sender,
+	    "sender" : req.session.username,
 	    "receiver" : receiver,
 	    "content": content,
 	    "messageDate" : MessageDate,
@@ -59,20 +57,20 @@ router.post('/sendMessage', function(req, res, next){
 });
 
 
-router.put('/marknew:receiver', function(req, res, next){
+router.put('/marknew', function(req, res, next){
      var db = req.db;
     var collection = db.get('message');
 
     if(!req.body) { return res.send(400); } // 6
 
-    collection.find({"receiver" : req.params.receiver }, {}, function(e,data){  
+    collection.find({"receiver" : req.session.username }, {}, function(e,data){  
         if(e) { return res.send(500, e); } // 1, 2
 
         if(!data) { return res.send(404); } // 3
 
         var update = {$set:{"new" : false} }; // 4
 
-        collection.update({"receiver" : req.params.receiver}, update,{ multi:true }, function(err) { // 5
+        collection.update({"receiver" : req.session.username}, update,{ multi:true }, function(err) { // 5
             if(err) {
                 return res.send(500, err);
             }
@@ -93,9 +91,9 @@ router.get('/check:username', function (req, res, next){
 
 router.get('/signin', function(req, res, next){
      if(req.session.username){
-      res.render('signin');
+      res.render('tempOne');
    }
-     res.redirect('/');
+     res.redirect('/signin');
      
 });
 /* put the new user's info into database*/

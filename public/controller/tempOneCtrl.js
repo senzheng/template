@@ -1,17 +1,20 @@
 //This is template that can 
+
 angular.module('tempOne',[])
        .controller('tempOneCtrl',function ($scope, $http, $interval){
              //when you click the send then the message will save in the database. 
              //for the real application the database will be unined by database user.
 
                
+              //$scope.test = user;
                loadMessage();
                $interval(function(){
                	 loadMessage();
                	 //changeStatus();
                },3000)
                 function loadMessage(){
-                	$http.get("/getMessage" + "sen_zheng").success(function (data){ 
+                  
+                	$http.get("/getMessage").success(function (data){ 
                 	      for(var i = 0; i < data.length; i++){
                                if(data[i].new){
 
@@ -45,18 +48,18 @@ angular.module('tempOne',[])
                           $scope.messagelist = data;
                           
                           $scope.read() = function (date){
-
+               
                           }
 
                 	});
-                      $http.put("/marknew" + "sen_zheng").success(function (data){
+                      $http.put("/marknew").success(function (data){
                         
                    });
 
                 }
 
                 function MarkRead() {
-                	$http.put("/markread" + "sen_zheng").success(function (data){
+                	$http.put("/markread").success(function (data){
                           
                 	});
                 }

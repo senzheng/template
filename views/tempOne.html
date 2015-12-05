@@ -16,13 +16,13 @@
   	<div class="container" >
       <h6>Note : this template will show your the two function: desktop notification and the email notification</h6>
 
-       
-       <label class="lebal">Welcome : Sen Zheng</label>
+      
+       <label class="lebal">Welcome : <%- user %> </label>
        <form name="sendMessage" method="post" action="/sendMessage">
          <table>
           <tr>
             <td>Sender:</td>
-            <td><input type="text" name="sender" placeholder="Sender's name" required></td>
+            <td><label><%- user %></label></td>
           </tr>
           <tr>
             <td>Receiver:</td>
@@ -37,6 +37,7 @@
        </form>
 
        <div ng-controller="tempOneCtrl">
+
              <div class="well">
             <table class="table table-striple">
               <tr ng-repeat="message in messagelist">

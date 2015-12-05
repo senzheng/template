@@ -5,12 +5,19 @@ var router = express.Router();
 //check the user dupulication
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index');
+router.get('/index', function(req, res, next) {
+  if(req.session.username){
+     res.render('index');
+   }
+   res.redirect('/');
+  
 });
 
 router.get('/tempOne', function(req, res, next){
-   res.render('tempOne');
+  if(req.session.username){
+     res.render('tempOne');
+   }
+   res.redirect('/');
 });
 
 router.get('/getMessage:receiver',function(req,res,next){
@@ -75,17 +82,21 @@ router.put('/marknew:receiver', function(req, res, next){
     });
  });
 
-router.get('/check:username', function(req, res, next){
+router.get('/check:username', function (req, res, next){
     var db = req.db;
     var collection = db.get('user');
-    collection.find({"username" : req.params.username},{},function(e,doc){
+    collection.find({"username" : req.params.username},{},function (e,doc){
         res.end(JSON.stringify(doc));
    });
 });
 
 
 router.get('/signin', function(req, res, next){
-     res.render('signin');
+     if(req.session.username){
+      res.render('signin');
+   }
+     res.redirect('/');
+     
 });
 /* put the new user's info into database*/
 router.post('/resgister',function(req, res, next){
@@ -102,9 +113,40 @@ router.post('/resgister',function(req, res, next){
       if(err){
         res.send("There was a problem to connect to the database! Please try later!");
       }else{
-        res.redirect('tempOne');
+        res.redirect('/login');
       }
     });
+});
+
+
+router.get('/', function (req, res, next){
+   if(req.session.username){
+     res.redirect('/tempOne');
+   }
+     res.render('login');
+ });
+
+router.get('/loginB/:username/:password', function (req, res, next){
+   var db = req.db;
+   var collection = db.get('user');
+   
+   collection.find({"username" : req.params.username , "password" : req.params.password},{},function (err, data){
+      if(data.length == 1){
+        req.session.username = req.params.username;
+        res.redirect('/tempOne');
+      }else if(data.length != 1){
+        res.send("Please check you username and password");
+      }
+       
+       //console.log(username);
+       //res.end(JSON.stringify(data));
+
+   });
+});
+
+router.get('/logout', function (req, res, next){
+  req.session.destroy();
+  res.redirect('/');
 });
 
 module.exports = router;

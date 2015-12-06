@@ -47,9 +47,7 @@ angular.module('tempOne',[])
                          
                           $scope.messagelist = data;
                           
-                          $scope.read() = function (date){
-               
-                          }
+                         
 
                 	});
                       $http.put("/marknew").success(function (data){
@@ -64,4 +62,53 @@ angular.module('tempOne',[])
                 	});
                 }
 
-       });
+       })
+     .controller('navbarCtrl', function ($scope, $http){
+                 $scope.city = "loading";
+                 $scope.weather = "loading";
+
+          if (navigator.geolocation) {
+                                      navigator.geolocation.getCurrentPosition(locationSuccess, locationError);
+                                    }
+                                    else{
+                                      showError("Your browser does not support Geolocation!");
+                                    }
+
+           function locationSuccess(position) {
+                     var lat = position.coords.latitude;
+                     var lon = position.coords.longitude;
+                     
+                     //search the user's current location's weather info (by using the openweathermap API)
+                     var cityinfo = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + lat+ "&lon=" + lon +"&cnt=0&mode=json&appid=2de143494c0b295cca9337e1e96b00e0";
+                     $http.get(cityinfo).success(function (data){
+                          $scope.city = data.city.name;
+                          $scope.weather = data.list[0].weather[0].main;
+                     });
+                      
+                  }
+
+           function locationError(error){
+                      switch(error.code) {
+                      case error.TIMEOUT:
+                      showError("A timeout occured! Please try again!");
+                         break;
+                      case error.POSITION_UNAVAILABLE:
+                         showError('We can\'t detect your location. Sorry!');
+                          break;
+                      case error.PERMISSION_DENIED:
+                           showError('Please allow geolocation access for this to work.');
+                          break;
+                       case error.UNKNOWN_ERROR:
+                           showError('An unknown error occured!');
+                          break;
+                       }
+
+              }
+
+            function showError(msg){
+                     weatherDiv.addClass('error').html(msg);
+                  }
+
+     });
+
+

@@ -83,9 +83,11 @@ angular.module('tempOne',[])
                      $http.get(cityinfo).success(function (data){
                           $scope.city = data.city.name;
                           $scope.weather = data.list[0].weather[0].main;
+                          
                      });
                       
-                  }
+                  
+
 
            function locationError(error){
                       switch(error.code) {
@@ -111,4 +113,4 @@ angular.module('tempOne',[])
 
      });
 
-
+   

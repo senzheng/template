@@ -1,0 +1,21 @@
+12.6 ---> finish chart(local weather and forcast) and simple (online-chat layout)
+          finish to-do list
+          Bouns: socket.io.
+         /*
+           todoList: timeline ; event_content ; done? ; type(important, moderate , whatever) ; |
+           Memo  : title, content , note :                                                     |
+           Special note for everyday or today                                                          --------------------------  \
+           books : read-list; wish-list;                                                               --------------------------  / THREE VERSION: 
+           Goods : wish-list; cart-list;
+           Health care:
+                      Indoor: activities: content , achievement;
+                      outdoor: activities: content, achievement; 
+                      General: heigth and weight, heartbeats, B/P
+
+           Dairy: 
+           weather;
+
+         */
+         1.pdf 2. html (top of main page) 3. printable
+
+12.7 --->           

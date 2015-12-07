@@ -63,13 +63,16 @@ angular.module('tempOne',[])
                 }
 
        })
-     .controller('navbarCtrl', function ($scope, $http){
+     .controller('navbarCtrl', function ($scope, $http, $interval){
                  $scope.city = "loading";
                  $scope.weather = "loading";
 
           if (navigator.geolocation) {
-                                      navigator.geolocation.getCurrentPosition(locationSuccess, locationError);
-                                    }
+                                       navigator.geolocation.getCurrentPosition(locationSuccess, locationError);
+                                    $interval(function(){
+                                       navigator.geolocation.getCurrentPosition(locationSuccess, locationError);
+                                    },1800000);
+                                  }
                                     else{
                                       showError("Your browser does not support Geolocation!");
                                     }
@@ -79,16 +82,88 @@ angular.module('tempOne',[])
                      var lon = position.coords.longitude;
                      
                      //search the user's current location's weather info (by using the openweathermap API)
-                     var cityinfo = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=" + lat+ "&lon=" + lon +"&cnt=0&mode=json&appid=2de143494c0b295cca9337e1e96b00e0";
+                     var cityinfo = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat+ "&lon=" + lon +"&cnt=0&mode=json&appid=2de143494c0b295cca9337e1e96b00e0&units=metric";
                      $http.get(cityinfo).success(function (data){
-                          $scope.city = data.city.name;
-                          $scope.weather = data.list[0].weather[0].main;
-                          
-                     });
-                      
-                  
+                          $scope.city = data.name;
+                          $scope.weather = data.weather[0].main;
+                          //$scope.icon = 
+                          var popdisplay = "<table class=" + "\"" + "table table-striped" + "\""+">" +
+                                             "<tr>" +
+                                                data.weather[0].description + " currently. It's " + data.main.temp + "C ; the high today was forecast as " + data.main.temp_max + "C"+//+ data.list[0].weather[0].
+                                              "</tr>" + 
+                                              "<tr>" + 
+                                                 "<td>" + 
+                                                     "sunrise" +
+                                                 "</td>" + 
+                                                 "<td>" + 
+                                                      convertTimestamp(data.sys.sunrise) + 
+                                                 "</td>" + 
+                                              
+                                                 "<td>" + 
+                                                     "sunset" +
+                                                 "</td>" + 
+                                                 "<td>" + 
+                                                      convertTimestamp(data.sys.sunset) + 
+                                                 "</td>" + 
+                                              "</tr>" + 
+                                              "<tr>" + 
+                                                 "<td>" +
+                                                      "Wind" +
+                                                 "</td>" + 
+                                                 "<td>" +
+                                                      getDirection(data.wind.deg) + " " + data.wind.speed +
+                                                 "</td>" + 
+                                                 "<td>" +
+                                                       "humidity" +
+                                                 "</td>" + 
+                                                 "<td>" +
+                                                       data.main.humidity + " %" +
+                                                 "</td>" + 
+                                              "</tr>" + 
+                                           "</table>";
+                          $(".pop").popover({
+                                  title: 'Today \'s weahter',
+                                   html: true,
+                                   placement: 'bottom',
+                                   container: 'body',
+                                   content: function () {
+                                    
+                                        return popdisplay;
+                                    
+                                  }
+                               });
+                            });
+                      }
 
+           function convertTimestamp (timestamp){
+                    var date = new Date(timestamp*1000);
+                      // Hours part from the timestamp
+                      var hours = date.getHours();
+                      // Minutes part from the timestamp
+                      var minutes = "0" + date.getMinutes();
+                      // Seconds part from the timestamp
+                      var seconds = "0" + date.getSeconds();
 
+                      // Will display time in 10:30:23 format
+                      var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+                      return formattedTime;
+           }
+            // Get Wind Direction
+           function getDirection (degree){
+                     var direction = "N";
+                     if(degree >= 315 || degree < 45 ){
+                         direction  = "N";
+                     }else if(degree >= 45 && degree < 135){
+                         direction = "E";
+                     }else if(degree >= 135 && degree < 225){
+                        direction = "S";
+                     }else if(degree >= 225 && degree < 315){
+                         direction = "W";
+                     }
+
+                     return direction;
+           }
            function locationError(error){
                       switch(error.code) {
                       case error.TIMEOUT:
@@ -113,4 +188,4 @@ angular.module('tempOne',[])
 
      });
 
-   
+

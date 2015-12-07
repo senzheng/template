@@ -24,27 +24,20 @@
           <label class="navbar-brand">Welcome : <%- user %> </label>
        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right" ng-controller="navbarCtrl">
-        <li><a href="javascript: void(0)" class="pop">{{city}}</a></li>
-        <li><a>{{weather}}</a></li>
+        <li><a>{{city}}</a></li>
+        <li><a href="javascript: void(0)" class="pop">{{weather}}</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
     <!--Navbar end-->
     <script>
-      $(".pop").popover({
-      title: 'Look! A bird!',
-       html: true,
-        placement: 'bottom',
-    content: function () {
-        $.get('http://www.google.com').success(function (data) {
-            return data;
-        });
-      }
-   });
- </script>
+      
+  </script>
+    <div class="">
+    <div>
     <!--Chat model begin-->
-       <div id="chat">
+      <div id="chat" ng-show = "show">
         <form name="sendMessage" method="post" action="/sendMessage">
          <table>
           <tr>

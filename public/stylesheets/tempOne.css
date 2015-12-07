@@ -1,7 +1,8 @@
 
 #pop {
-    left: -169px!important;
-    width: 400px;
+    left: -199px!important;
+    max-width: 100%;
+    
 }
 
 #pop .arrow {

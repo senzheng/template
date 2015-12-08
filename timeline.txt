@@ -22,3 +22,6 @@
            1. make the update for the user's collection
 12.8 ---> finish the add friends part and chat's part
            start to to do list part           
+
+
+           forever start --minUptime 1000 --spinSleepTime 1000 ./bin/www

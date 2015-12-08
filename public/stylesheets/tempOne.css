@@ -5,6 +5,29 @@
     
 }
 
+#chat {
+	height: 400px;
+}
+
 #pop .arrow {
     left: 90%
+}
+
+span {
+	text-align: right;
+	display: inline-block;
+	text-decoration: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+.list{
+	text-align: right;
+	display: inline-block;
+}
+
+.panel{
+	overflow: scroll;
 }

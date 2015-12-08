@@ -19,5 +19,48 @@ db.message.update(
 
 db.user.insert({
 	"username" : "sen_zheng",
-	"password" : "123456789"
+	"password" : "123456789",
+	"friends"  : [ {
+	                "name" : "mengxiong",
+	                "Alias" : ""
+	             },{
+	                "name" : "zhengsen",
+	                "Alias" : ""
+	             }]
+})
+
+db.user.insert({
+	"username" : "zhengsen",
+	"password" : "123456789",
+	"friends"  : [ {
+	                "name" : "sen_zheng",
+	                "Alias" : ""
+	             },{
+	                "name" : "mengxiong",
+	                "Alias" : ""
+	             }]
+})
+
+db.user.insert({
+	"username" : "mengxiong",
+	"password" : "123456789",
+	"friends"  : [ {
+	                "name" : "sen_zheng",
+	                "Alias" : ""
+	             },{
+	                "name" : "zhengsen",
+	                "Alias" : ""
+	             }]
+})
+
+db.user.insert({
+	"username" : "sen",
+	"password" : "123456789",
+	"friends"  : [ {
+	                "name" : "sen_zheng",
+	                "Alias" : ""
+	             },{
+	                "name" : "zhengsen",
+	                "Alias" : ""
+	             }]
 })

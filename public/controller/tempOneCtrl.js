@@ -1,6 +1,6 @@
 //This is template that can 
 
-angular.module('tempOne',[])
+angular.module('tempOne',['ui.bootstrap'])
        .controller('tempOneCtrl',function ($scope, $http, $interval){
              //when you click the send then the message will save in the database. 
              //for the real application the database will be unined by database user.
@@ -179,13 +179,40 @@ angular.module('tempOne',[])
                            showError('An unknown error occured!');
                           break;
                        }
-
-              }
+           }
 
             function showError(msg){
                      weatherDiv.addClass('error').html(msg);
                   }
 
+     })
+     .controller("chatCtrl", function ($scope, $http, $uibModal){
+         getFriends();
+         $scope.deletes = false;
+
+      function getFriends (){
+         $http.get("/getFriends").success( function (data){
+              $scope.friends = data[0].friends;
+          });
+
+      }
+         $scope.delete = function (){
+            $scope.deletes = true;
+         }
+
+         $scope.recover = function(){
+          $scope.deletes = false;
+         }
+
+          $scope.open = function () {
+
+                var modalInstance = $uibModal.open({
+                  //animation: $scope.animationsEnabled,
+                  templateUrl: 'addfriend.html',
+                  //controller: 'addFriendCtrl',
+                  size: 'sm',
+             });
+          };
      });
 
 

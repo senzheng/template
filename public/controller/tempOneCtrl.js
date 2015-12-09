@@ -266,9 +266,10 @@ angular.module('tempOne',['ui.bootstrap'])
                    $http.put('/addfriends/' + friend).success(function (data){});
                    $scope.message = friend + "has in your chatting list press <cancel> and start to chat";
                    $scope.show = false;
+                   $uibModalInstance.close();
                  }
                  
-                   $uibModalInstance.close();
+                   
               });
 
               

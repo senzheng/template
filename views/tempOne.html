@@ -40,13 +40,23 @@
         <div class="col-xs-6 col-md-3" ng-controller = "chatCtrl">
             <script type="text/ng-template" id="addfriend.html">
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+            <div class="modal-header">
+                <h3 class="modal-title" ng-show="show">Ask your friend a username</h3>
+                <h5 class="model-title" ng-hide="show">{{message}}</h3>
+                {{test}}
+            </div>
+            <div class="modal-body">
                  <div class="input-group">
-                  <input type="text" class="form-control" placeholder="input username to search your friend" ng-model="friend" ng-click="add(friend)">
+                  <input type="text" class="form-control" placeholder="input username to search your friend" ng-model="friend">
                   <span class="input-group-btn">
-                    <button class="btn btn-secondary" type="button">Go!</button>
+                    <button class="btn btn-secondary" type="button" ng-click="add(friend)">Add</button> |
+                    <button class="btn btn-secondary" type="button" ng-click="cancel()">Cancel</button>
                   </span>
                 </div>
-                  
+            </div>   
+            <div class="modal-footer">
+                <h4>Add a friend to start to chat</h4>
+            </div> 
             </script>
             <div id = "chat" class="panel panel-default">
               <div class="panel-heading">
@@ -59,7 +69,7 @@
             </div>
             <div class="panel-body">
                 <div class="list-group">
-                   <button type="button" class="list-group-item" ng-repeat="friend in friends"><span align="left">{{friend.name}}</span><span align="right" ng-show="deletes"><a><span class="glyphicon glyphicon-remove"></span></a></span></button>
+                   <button type="button" class="list-group-item" ng-repeat="friend in friends"><span align="left">{{friend.name}}</span><span align="right" ng-show="deletes"><a ng-click="DeleteItem(friend.name)"><span class="glyphicon glyphicon-remove"></span></a></span></button>
                 </div>
             </div>
             </div>

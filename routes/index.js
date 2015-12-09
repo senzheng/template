@@ -161,11 +161,11 @@ router.put('/addfriends/:fname', function (req, res, next){
     collection.find({"username" : req.session.username }, {}, function(e,data){  
         if(e) { return res.send(500, e); } // 1, 2
 
-        if(!data) { return res.send(404); } // 3
+        if(!data) { return res.send(404);} // 3
 
         var update = {$push:{"friends" : {"name" : req.params.fname, "Alias" : ""}} }; // 4
 
-        collection.update({"username" : "sen_zheng"}, update,{ multi:true }, function(err) { // 5
+        collection.update({"username" : req.session.username}, update,{ multi:true }, function(err) { // 5
             if(err) {
                 return res.send(500, err);
             }
@@ -174,6 +174,30 @@ router.put('/addfriends/:fname', function (req, res, next){
         });
     });
 });
+//delete a friend from friends list
+router.put('/DeleteFriend/:fname', function (req, res, next){
+     var db = req.db;
+    var collection = db.get('user');
+    //var username = req.body.username;
+    if(!req.body) { return res.send(400); } // 6
+
+    collection.find({"username" : req.session.username }, {}, function(e,data){  
+        if(e) { return res.send(500, e); } // 1, 2
+
+        if(!data) { return res.send(404);} // 3
+
+        var update = {$pull:{"friends" : {"name" : req.params.fname, "Alias" : ""}} }; // 4
+
+        collection.update({"username" : req.session.username}, update,{ multi:true }, function(err) { // 5
+            if(err) {
+                return res.send(500, err);
+            }
+
+            res.json(data);
+        });
+    });
+});
+
 //chat part ends
 router.get('/logout', function (req, res, next){
   req.session.destroy();

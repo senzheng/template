@@ -1,6 +1,20 @@
 //This is template that can 
 
 angular.module('tempOne',['ui.bootstrap'])
+       .factory('friendData',['$http' ,function ($http){
+            var baseUrl = "/getFriends";
+            var friendData = {};
+
+            friendData.getFriendsList = function (){
+               return $http.get(baseUrl);
+            };
+
+            friendData.DeleteFriend = function (friend){
+               return $http.put('/DeleteFriend/' + friend);
+            };
+
+            return friendData;
+       }])
        .controller('tempOneCtrl',function ($scope, $http, $interval){
              //when you click the send then the message will save in the database. 
              //for the real application the database will be unined by database user.
@@ -186,16 +200,18 @@ angular.module('tempOne',['ui.bootstrap'])
                   }
 
      })
-     .controller("chatCtrl", function ($scope, $http, $uibModal){
-         getFriends();
+     .controller("chatCtrl", function ($scope, $http, $uibModal, friendData, $interval){
+                    
+                 friendData.getFriendsList().success(function (data){
+                     $scope.friends = data[0].friends;
+                  });
+
+                 
+                 //changeStatus();
+              
          $scope.deletes = false;
 
-      function getFriends (){
-         $http.get("/getFriends").success( function (data){
-              $scope.friends = data[0].friends;
-          });
-
-      }
+      
          $scope.delete = function (){
             $scope.deletes = true;
          }
@@ -203,16 +219,66 @@ angular.module('tempOne',['ui.bootstrap'])
          $scope.recover = function(){
           $scope.deletes = false;
          }
+          
+         $scope.DeleteItem = function(friend){
+           friendData.DeleteFriend(friend).success(function (data){
+             
+         });
 
+           friendData.getFriendsList().success(function (data){
+                     $scope.friends = data[0].friends;
+                  });
+         };
+           
           $scope.open = function () {
 
                 var modalInstance = $uibModal.open({
                   //animation: $scope.animationsEnabled,
                   templateUrl: 'addfriend.html',
-                  //controller: 'addFriendCtrl',
-                  size: 'sm',
+                  controller: 'addFriendCtrl',
+                  //size: 'sm',
              });
+
+
+                modalInstance.result.then(function () {
+                    friendData.getFriendsList().success(function (data){
+                     $scope.friends = data[0].friends;
+                  });
+                  }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                  });
           };
+
+
+     })
+     .controller('addFriendCtrl', function ($scope, $http, friendData, $interval, $uibModalInstance){
+          $scope.show = true;
+          
+
+
+          $scope.add = function (friend){
+
+              $http.get('/check' + friend).success(function (data){
+                 if(data.length == 0){
+                   $scope.message = "The username is not existed";
+                  $scope.show = false;
+                 }else{
+                   $http.put('/addfriends/' + friend).success(function (data){});
+                   $scope.message = friend + "has in your chatting list press <cancel> and start to chat";
+                   $scope.show = false;
+                 }
+                 
+                   $uibModalInstance.close();
+              });
+
+              
+          };
+           
+          $scope.cancel = function () {
+               $uibModalInstance.dismiss('cancel');
+            };
+            
+         
      });
 
 

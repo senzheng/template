@@ -1,9 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-
-//check the user dupulication
-
 /* GET home page. */
 router.get('/index', function(req, res, next) {
   if(req.session.username){
@@ -19,6 +16,7 @@ router.get('/tempOne', function(req, res, next){
    }
    res.redirect('/');
 });
+//socket
 
 router.get('/getMessage',function(req,res,next){
    var db = req.db;

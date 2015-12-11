@@ -7,6 +7,7 @@
 
 #chat {
 	height: 400px;
+	width: 100%;
 }
 
 #pop .arrow {
@@ -29,5 +30,10 @@ a {
 }
 
 .panel{
+	
+}
+
+.panel-body{
+	height: 305px;
 	overflow: scroll;
 }

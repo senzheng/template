@@ -206,11 +206,13 @@ angular.module('tempOne',['ui.bootstrap'])
                      $scope.friends = data[0].friends;
                   });
 
-                 
+         var socket = io();
                  //changeStatus();
-              
+         $scope.Reciver = "Chat Here"
          $scope.deletes = false;
-
+         $scope.send = function (message) {
+             socket.emit('chat message', message);
+         }
       
          $scope.delete = function (){
             $scope.deletes = true;
@@ -229,6 +231,10 @@ angular.module('tempOne',['ui.bootstrap'])
                      $scope.friends = data[0].friends;
                   });
          };
+
+         $scope.chat = function (friend){
+            $scope.Reciver = friend;
+         }
            
           $scope.open = function () {
 

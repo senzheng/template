@@ -1,3 +1,4 @@
+var http = require('http');
 var express = require('express');
 var path = require('path');
 
@@ -14,8 +15,21 @@ var db = monk('localhost:27017/template');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
 
+var app = express();
+var app = require('express')();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+//check the user dupulication
+
+
+io.on('connection' , function (socket){
+    console.log('connected!');
+});
+
+server.listen(3000);
+
+//var io = require('socket.io').listen(server);
 // view engine setup
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
@@ -29,6 +43,10 @@ app.use(cookieParser());
 app.use(session({resave: true, saveUninitialized: true, secret: 'WELOVECARROT', cookie: { maxAge: 600000 }}));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+ 
+
 app.use(function(req, res, next){
    req.db = db;
    next();
@@ -36,6 +54,9 @@ app.use(function(req, res, next){
 
 app.use('/', routes);
 app.use('/users', users);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -67,6 +88,7 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
 
 
 module.exports = app;

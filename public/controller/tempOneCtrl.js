@@ -205,8 +205,11 @@ angular.module('tempOne',['ui.bootstrap'])
                  friendData.getFriendsList().success(function (data){
                      $scope.friends = data[0].friends;
                   });
-
+         $scope.socket = "socket here";
          var socket = io();
+         socket.on('news' , function (data){
+              $scope.socket = data;
+         })
                  //changeStatus();
          $scope.Reciver = "Chat Here"
          $scope.deletes = false;

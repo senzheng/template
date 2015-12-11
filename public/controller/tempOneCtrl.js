@@ -209,12 +209,12 @@ angular.module('tempOne',['ui.bootstrap'])
          var socket = io();
          socket.on('news' , function (data){
               $scope.socket = data;
-         })
+         });
                  //changeStatus();
          $scope.Reciver = "Chat Here"
          $scope.deletes = false;
          $scope.send = function (message) {
-             socket.emit('chat message', message);
+             socket.emit('news', message);
          }
       
          $scope.delete = function (){

@@ -20,6 +20,7 @@ db.message.update(
 db.user.insert({
 	"username" : "sen_zheng",
 	"password" : "123456789",
+	"email" : "nntmac@yahoo.com",
 	"friends"  : [ {
 	                "name" : "mengxiong",
 	                "Alias" : ""
@@ -32,6 +33,7 @@ db.user.insert({
 db.user.insert({
 	"username" : "zhengsen",
 	"password" : "123456789",
+	"email" : "140301103@svuca.edu",
 	"friends"  : [ {
 	                "name" : "sen_zheng",
 	                "Alias" : ""
@@ -44,6 +46,7 @@ db.user.insert({
 db.user.insert({
 	"username" : "mengxiong",
 	"password" : "123456789",
+	"email" : "szheng4@kent.edu",
 	"friends"  : [ {
 	                "name" : "sen_zheng",
 	                "Alias" : ""
@@ -56,6 +59,7 @@ db.user.insert({
 db.user.insert({
 	"username" : "sen",
 	"password" : "123456789",
+	"email" : "xiren62@yahoo.com",
 	"friends"  : [ {
 	                "name" : "sen_zheng",
 	                "Alias" : ""

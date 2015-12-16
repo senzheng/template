@@ -86,50 +86,69 @@ router.get('/check:username', function (req, res, next){
    });
 });
 
-
-router.get('/signin', function(req, res, next){
-     if(req.session.username){
-      res.render('tempOne');
-   }
-     res.redirect('/signin');
-     
+router.get('/validation:email', function (req, res, next){
+    var db = req.db;
+    var collection = db.get('user');
+    collection.find({"email" : req.params.email},{}, function (e, doc){
+         res.end(JSON.stringify(doc));
+    });
 });
+
+router.get('/signup' , function (req, res, next){
+  if(req.session.username){
+      res.redirect('index');
+  }
+
+  res.render('signup');
+});
+
+
 /* put the new user's info into database*/
 router.post('/resgister',function(req, res, next){
     var db = req.db;
     var username = req.body.username;
     var password = req.body.password;
+    var email = req.body.email;
 
     var collection = db.get('user');
 
     collection.insert({
       "username" : username,
-      "password" : password
+      "password" : password,
+      "email" : email
     },function (err, doc){
       if(err){
         res.send("There was a problem to connect to the database! Please try later!");
       }else{
-        res.redirect('/login');
+        res.redirect('/');
       }
     });
+});
+
+router.get('/login', function(req, res, next){
+    if(req.session.username){
+       res.redirect('/index');
+    }
+
+    res.render('login');
 });
 
 
 router.get('/', function (req, res, next){
    if(req.session.username){
-     res.redirect('/tempOne');
+     res.redirect('/index');
    }
      res.render('login');
  });
 
-router.get('/loginB/:username/:password', function (req, res, next){
+router.get('/loginB/:email/:password', function (req, res, next){
    var db = req.db;
    var collection = db.get('user');
    
-   collection.find({"username" : req.params.username , "password" : req.params.password},{},function (err, data){
+   collection.find({"email" : req.params.email , "password" : req.params.password},{},function (err, data){
       if(data.length == 1){
-        req.session.username = req.params.username;
-        res.redirect('/tempOne');
+        req.session.username = data[0].username;
+        res.redirect('/index');
       }else if(data.length != 1){
         res.send("Please check you username and password");
       }

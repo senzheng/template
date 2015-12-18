@@ -221,7 +221,63 @@ router.get('/logout', function (req, res, next){
   res.redirect('/');
 });
 
+//template for trip
+router.get('/tripitems', function (req, res, next){
+  res.render('tripitems');
+});
+
+router.put('/markDone:itemname', function (req, res, next){
+    var db = req.db;
+    var collection = db.get('trip');
+    //var username = req.body.username;
+    if(!req.body) { return res.send(400); } // 6
+
+    collection.find({"name" : req.params.itemname}, {}, function(e,data){  
+        if(e) { return res.send(500, e); } // 1, 2
+
+        if(!data) { return res.send(404);} // 3
+         
+        var update = {$set:{"Done" : !data[0].Done}}; // 4
+         console.log(!data[0].Done);
+        collection.update({"name" : req.params.itemname}, update,{ multi:true }, function(err) { // 5
+            if(err) {
+                return res.send(500, err);
+            }
+
+            res.json(data);
+        });
+    });
+});
+
+router.post('/insertNew' , function (req, res, next){
+  var db = req.db;
+    var name = req.body.name;
+    var amount = req.body.amount;
+
+    var collection = db.get('trip');
+
+    collection.insert({
+      "name" : name,
+      "amount" : amount,
+      "Done" : false
+    },function (err, doc){
+      if(err){
+        res.send("There was a problem to connect to the database! Please try later!");
+      }else{
+        res.redirect('/tripitems');
+      }
+    });
+})
+
+router.get('/getitems', function (req, res, next){
+  var db = req.db;
+  var collection = db.get('trip');
+  collection.find({},{}, function (err, data){
+      res.end(JSON.stringify(data));
+  });
+});
   
+
   
 
 module.exports = router;

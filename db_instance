@@ -20,12 +20,30 @@ db.message.update(
 db.user.insert({
 	"username" : "sen_zheng",
 	"password" : "123456789",
+	"GraduateDate" : "2013.10.3",
 	"email" : "nntmac@yahoo.com",
+	"Courses" : [{
+	           "name" : "CS101"
+	           },{
+	           "name" : "CS102"
+	           }],
 	"friends"  : [ {
 	                "name" : "mengxiong",
+                    "GraduateDate" : "2013.10.3",
+                    "Courses" : [{
+						           "name" : "CS101"
+						           },{
+						           "name" : "CS102"
+						           }],
 	                "Alias" : ""
 	             },{
 	                "name" : "zhengsen",
+	                "GraduateDate" : "2013.10.3",
+	                "Courses" : [{
+						           "name" : "CS101"
+						           },{
+						           "name" : "CS102"
+						           }],
 	                "Alias" : ""
 	             }]
 })
@@ -33,12 +51,30 @@ db.user.insert({
 db.user.insert({
 	"username" : "zhengsen",
 	"password" : "123456789",
+	"GraduateDate" : "2013.10.3",
 	"email" : "140301103@svuca.edu",
+	"Courses" : [{
+	           "name" : "CS101"
+	           },{
+	           "name" : "CS102"
+	           }],
 	"friends"  : [ {
 	                "name" : "sen_zheng",
+	                "GraduateDate" : "2013.10.3",
+	                "Courses" : [{
+						           "name" : "CS101"
+						           },{
+						           "name" : "CS102"
+						           }],
 	                "Alias" : ""
 	             },{
 	                "name" : "mengxiong",
+	                "GraduateDate" : "2013.10.3",
+	                "Courses" : [{
+						           "name" : "CS101"
+						           },{
+						           "name" : "CS102"
+						           }],
 	                "Alias" : ""
 	             }]
 })
@@ -46,12 +82,25 @@ db.user.insert({
 db.user.insert({
 	"username" : "mengxiong",
 	"password" : "123456789",
+	"GraduateDate" : "2013.10.3",
 	"email" : "szheng4@kent.edu",
-	"friends"  : [ {
+	"friends"  : [{
 	                "name" : "sen_zheng",
+	                "Courses" : [{
+						           "name" : "CS101"
+						           },{
+						           "name" : "CS102"
+						           }],
+	                "GraduateDate" : "2013.10.3",
 	                "Alias" : ""
 	             },{
 	                "name" : "zhengsen",
+                    "GraduateDate" : "2013.10.3",
+                    "Courses" : [{
+						           "name" : "CS101"
+						           },{
+						           "name" : "CS102"
+						           }],
 	                "Alias" : ""
 	             }]
 })
@@ -59,12 +108,31 @@ db.user.insert({
 db.user.insert({
 	"username" : "sen",
 	"password" : "123456789",
+	"GraduateDate" : "2013.10.3",
 	"email" : "xiren62@yahoo.com",
 	"friends"  : [ {
 	                "name" : "sen_zheng",
+	                "GraduateDate" : "2013.10.3",
+	                "Courses" : [{
+						           "name" : "CS101"
+						           },{
+						           "name" : "CS102"
+						           }],
 	                "Alias" : ""
 	             },{
 	                "name" : "zhengsen",
+	                "GraduateDate" : "2013.10.3",
+	                "Courses" : [{
+						           "name" : "CS101"
+						           },{
+						           "name" : "CS102"
+						           }],
 	                "Alias" : ""
 	             }]
 })
+
+db.trip.insert({
+	             "name" : "box",
+	             "amount" : 1,
+	             "Done" : false
+	})

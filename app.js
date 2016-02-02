@@ -23,16 +23,7 @@ var io = require('socket.io')(server);
 //check the user dupulication
 
 
-io.on('connection' , function (socket){
-    console.log('connected!');
-    socket.emit('test_connection','hello');
-    socket.on('server',function (data){
-       console.log(data);
-       io.emit(data.reciever, data.message);
-    });
-});
 
-server.listen(3000);
 
 //var io = require('socket.io').listen(server);
 // view engine setup
